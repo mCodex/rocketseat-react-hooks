@@ -1,9 +1,20 @@
 import React, { useState, useEffect } from 'react';
 
 const App = () => {
-    const [tech, setTech] = useState(['ReactJS', 'React Native']);
-
+    const [tech, setTech] = useState([]);
     const [newTech, setNewTech] = useState('');
+
+    useEffect(() => {
+        const techsFromLS = localStorage.getItem('tech');
+
+        if (techsFromLS) {
+            setTech(JSON.parse(techsFromLS));
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem('tech', JSON.stringify(tech));
+    }, [tech]);
 
     const handleAdd = () => setTech(prevState => [...prevState, newTech]);
 
